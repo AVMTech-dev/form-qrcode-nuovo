@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<title>QR Code Scanner - Apparato NUOVO</title>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript">
+document.getElementById("goBack").addEventListener("click", function() {
+    if (document.referrer) {
+        window.location.href = document.referrer;
+    } else {
+        history.back();
+    }
+});
+
+document.getElementById("goBack").addEventListener("click", function () {
+    if (document.referrer) {
+        window.location.href = document.referrer;
+    } else if (window.opener) {
+        window.close();
+    } else {
+        history.back();
+    }
+});
+</script>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 2rem;
+            font-size: 2rem;
+        }
+        #reader {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
+        #result {
+            margin-top: 2rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        button {
+            font-size: 2rem;
+            padding: 1rem 2rem;
+            margin: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Scannerizza il QR Code - Apparato NUOVO</h1>
+<div id="reader"></div>
+<div id="result">Seriale: <span id="seriale">---</span></div>
+<button onclick="copiaSeriale()">📋 Copia seriale</button><div id="copyMessage"></div>
+
+<script>
+        let seriale = "";
+
+        function onScanSuccess(decodedText, decodedResult) {
+            seriale = decodedText;
+            document.getElementById("seriale").textContent = seriale;
+            html5QrcodeScanner.clear();
+        }
+
+        var html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+
+        function copiaSeriale() {
+            navigator.clipboard.writeText(seriale).then(() => {
+                alert("Seriale copiato negli appunti!");
+            });
+        }
+
+        function tornaAlModulo() {
+            history.back();
+        }
+    </script>
+<script>
+document.querySelector('button').addEventListener('click', function () {
+  navigator.clipboard.writeText(document.getElementById('seriale').textContent.trim());
+  document.getElementById('copyMessage').textContent = 'Seriale copiato negli appunti! Adesso puoi chiudere questa finestra e tornare al Form! Grazie!';
+});
+</script></body>
+</html>
