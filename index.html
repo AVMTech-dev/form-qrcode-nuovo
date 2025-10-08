@@ -54,7 +54,6 @@ document.getElementById("goBack").addEventListener("click", function () {
 <div id="reader"></div>
 <div id="result">Seriale: <span id="seriale">---</span></div>
 <button onclick="copiaSeriale()">📋 Copia seriale</button>
-<button id="goBack" onclick="tornaAlModulo()">↩️ Torna al modulo</button>
 <script>
         let seriale = "";
 
@@ -70,7 +69,7 @@ document.getElementById("goBack").addEventListener("click", function () {
 
         function copiaSeriale() {
             navigator.clipboard.writeText(seriale).then(() => {
-                alert("Seriale copiato negli appunti!");
+                alert("Seriale copiato negli appunti! Adesso puoi chiudere questa pagina...Grazie!"");
             });
         }
 
