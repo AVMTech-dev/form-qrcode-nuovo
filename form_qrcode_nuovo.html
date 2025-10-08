@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Scanner - Apparato NUOVO</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
+      font-size: 2rem;
+    }
+    #reader {
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+    }
+    #result {
+      margin-top: 2rem;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 2.5rem;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scansiona il QR Code - Apparato NUOVO</h1>
+  <div id="reader"></div>
+  <div id="result"></div>
+  <button id="submitBtn" style="display:none;">Vai al Form</button>
+
+  <script>
+    let scannedSerial = "";
+
+    function onScanSuccess(decodedText, decodedResult) {
+      scannedSerial = decodedText;
+      document.getElementById("result").innerText = "Seriale: " + scannedSerial;
+      document.getElementById("submitBtn").style.display = "inline-block";
+      html5QrcodeScanner.clear();
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader", { fps: 10, qrbox: 250 });
+    html5QrcodeScanner.render(onScanSuccess);
+
+    document.getElementById("submitBtn").addEventListener("click", function() {
+      const baseUrl = "https://forms.office.com/Pages/ResponsePage.aspx?id=ZsJ8uMQJzECN-skuCL-ctJp3ZCXLhA5Eoq0lg0h-LxxUMVhRR1VGOVYzU0lMMVYzSzlXQlVNTDNXOS4u";
+      const fieldName = "34_NSerialeApparatoNuovo";
+      const url = baseUrl + "&" + fieldName + "=" + encodeURIComponent(scannedSerial);
+      window.location.href = url;
+    });
+  </script>
+</body>
+</html>
